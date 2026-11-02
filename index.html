@@ -18,49 +18,174 @@
       --badge-full: #dc2626;
       --badge-open: #16a34a;
     }
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
-    body { background-color: var(--bg); color: var(--text); padding: 2rem 1rem; display: flex; justify-content: center; min-height: 100vh; }
-    .container { width: 100%; max-width: 900px; }
-    .header { text-align: center; margin-bottom: 2rem; }
-    .header h1 { font-size: 2.2rem; margin-bottom: 0.5rem; color: #fff; }
-    .header p { color: var(--muted); }
-    
-    .card { background-color: var(--card-bg); border-radius: 12px; padding: 2rem; border: 1px solid var(--border); box-shadow: 0 10px 25px rgba(0,0,0,0.3); margin-bottom: 2rem; }
-    .alert { padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem; font-weight: 500; font-size: 0.95rem; display: none; }
-    .alert.danger { background: rgba(239, 68, 68, 0.2); border: 1px solid var(--danger); color: #fca5a5; }
-    .alert.success { background: rgba(34, 197, 94, 0.2); border: 1px solid var(--success); color: #86efac; }
-    
-    .form-group { margin-bottom: 1.25rem; }
-    label { display: block; font-size: 0.875rem; font-weight: 600; margin-bottom: 0.5rem; color: #cbd5e1; }
+    * { 
+      box-sizing: border-box; 
+      margin: 0; 
+      padding: 0; 
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; 
+    }
+    body { 
+      background-color: var(--bg); 
+      color: var(--text); 
+      padding: 2rem 1rem; 
+      display: flex; 
+      justify-content: center; 
+      min-height: 100vh; 
+    }
+    .container { 
+      width: 100%; 
+      max-width: 900px; 
+    }
+    .header { 
+      text-align: center; 
+      margin-bottom: 2rem; 
+    }
+    .header h1 { 
+      font-size: 2.2rem; 
+      margin-bottom: 0.5rem; 
+      color: #fff; 
+    }
+    .header p { 
+      color: var(--muted); 
+    }
+    .card { 
+      background-color: var(--card-bg); 
+      border-radius: 12px; 
+      padding: 2rem; 
+      border: 1px solid var(--border); 
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3); 
+      margin-bottom: 2rem; 
+    }
+    .alert { 
+      padding: 1rem; 
+      border-radius: 8px; 
+      margin-bottom: 1.5rem; 
+      font-weight: 500; 
+      font-size: 0.95rem; 
+      display: none; 
+    }
+    .alert.danger { 
+      background: rgba(239, 68, 68, 0.2); 
+      border: 1px solid var(--danger); 
+      color: #fca5a5; 
+    }
+    .alert.success { 
+      background: rgba(34, 197, 94, 0.2); 
+      border: 1px solid var(--success); 
+      color: #86efac; 
+    }
+    .form-group { 
+      margin-bottom: 1.25rem; 
+    }
+    label { 
+      display: block; 
+      font-size: 0.875rem; 
+      font-weight: 600; 
+      margin-bottom: 0.5rem; 
+      color: #cbd5e1; 
+    }
     input, select {
-      width: 100%; padding: 0.75rem 1rem; border-radius: 8px; border: 1px solid var(--border);
-      background-color: #0f172a; color: #fff; font-size: 1rem; outline: none; transition: border 0.2s;
+      width: 100%; 
+      padding: 0.75rem 1rem; 
+      border-radius: 8px; 
+      border: 1px solid var(--border);
+      background-color: #0f172a; 
+      color: #fff; 
+      font-size: 1rem; 
+      outline: none; 
+      transition: border 0.2s;
     }
-    input:focus, select:focus { border-color: var(--primary); }
-    
-    .section-title { font-size: 1.1rem; font-weight: 700; color: #a5b4fc; margin: 1.5rem 0 0.75rem; border-bottom: 1px solid var(--border); padding-bottom: 0.5rem; }
-    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-    @media (max-width: 650px) { .grid { grid-template-columns: 1fr; } }
-    
+    input:focus, select:focus { 
+      border-color: var(--primary); 
+    }
+    .section-title { 
+      font-size: 1.1rem; 
+      font-weight: 700; 
+      color: #a5b4fc; 
+      margin: 1.5rem 0 0.75rem; 
+      border-bottom: 1px solid var(--border); 
+      padding-bottom: 0.5rem; 
+    }
+    .grid { 
+      display: grid; 
+      grid-template-columns: 1fr 1fr; 
+      gap: 1rem; 
+    }
+    @media (max-width: 650px) { 
+      .grid { grid-template-columns: 1fr; } 
+    }
     button {
-      width: 100%; padding: 0.85rem; background-color: var(--primary); color: white; border: none;
-      border-radius: 8px; font-size: 1rem; font-weight: 600; cursor: pointer; transition: background 0.2s; margin-top: 1rem;
+      width: 100%; 
+      padding: 0.85rem; 
+      background-color: var(--primary); 
+      color: white; 
+      border: none;
+      border-radius: 8px; 
+      font-size: 1rem; 
+      font-weight: 600; 
+      cursor: pointer; 
+      transition: background 0.2s; 
+      margin-top: 1rem;
     }
-    button:hover:not(:disabled) { background-color: var(--primary-hover); }
-    button:disabled { opacity: 0.6; cursor: not-allowed; }
-
-    /* Live Registration Table Styles */
-    .table-container { overflow-x: auto; margin-top: 1rem; }
-    table { width: 100%; border-collapse: collapse; text-align: left; font-size: 0.9rem; }
-    th, td { padding: 0.75rem 1rem; border-bottom: 1px solid var(--border); }
-    th { background: #111827; color: #93c5fd; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 0.05em; }
-    tr:hover { background-color: rgba(255, 255, 255, 0.02); }
-    
-    .badge { display: inline-block; padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.75rem; font-weight: 600; }
-    .badge-full { background: var(--badge-full); color: #fff; }
-    .badge-open { background: var(--badge-open); color: #fff; }
-    .refresh-btn { width: auto; padding: 0.4rem 1rem; font-size: 0.85rem; margin-top: 0; background: #334155; }
-    .table-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; }
+    button:hover:not(:disabled) { 
+      background-color: var(--primary-hover); 
+    }
+    button:disabled { 
+      opacity: 0.6; 
+      cursor: not-allowed; 
+    }
+    .table-container { 
+      overflow-x: auto; 
+      margin-top: 1rem; 
+    }
+    table { 
+      width: 100%; 
+      border-collapse: collapse; 
+      text-align: left; 
+      font-size: 0.9rem; 
+    }
+    th, td { 
+      padding: 0.75rem 1rem; 
+      border-bottom: 1px solid var(--border); 
+    }
+    th { 
+      background: #111827; 
+      color: #93c5fd; 
+      text-transform: uppercase; 
+      font-size: 0.75rem; 
+      letter-spacing: 0.05em; 
+    }
+    tr:hover { 
+      background-color: rgba(255, 255, 255, 0.02); 
+    }
+    .badge { 
+      display: inline-block; 
+      padding: 0.25rem 0.5rem; 
+      border-radius: 4px; 
+      font-size: 0.75rem; 
+      font-weight: 600; 
+    }
+    .badge-full { 
+      background: var(--badge-full); 
+      color: #fff; 
+    }
+    .badge-open { 
+      background: var(--badge-open); 
+      color: #fff; 
+    }
+    .refresh-btn { 
+      width: auto; 
+      padding: 0.4rem 1rem; 
+      font-size: 0.85rem; 
+      margin-top: 0; 
+      background: #334155; 
+    }
+    .table-header { 
+      display: flex; 
+      justify-content: space-between; 
+      align-items: center; 
+      margin-bottom: 1rem; 
+    }
   </style>
 </head>
 <body>
@@ -181,8 +306,8 @@
       try {
         const res = await fetch(SCRIPT_URL);
         const data = await res.json();
-        
-        // Reset dropdown options text
+
+        // Reset dropdown options
         Array.from(eventSelect.options).forEach(opt => {
           if (!opt.value) return;
           opt.disabled = false;
@@ -194,8 +319,8 @@
         ALL_EVENTS.forEach(ev => {
           const sheetInfo = data[ev.name];
           const isFull = sheetInfo && sheetInfo.status === 'full';
-          
-          // Disable option in dropdown if already registered
+
+          // Disable filled events in the registration dropdown
           const opt = Array.from(eventSelect.options).find(o => o.value === ev.name);
           if (opt && isFull) {
             opt.disabled = true;
@@ -233,49 +358,45 @@
       alertBox.className = "alert";
 
       const selectedOpt = eventSelect.options[eventSelect.selectedIndex];
-      const payload = {
-        event: selectedOpt.value,
-        category: selectedOpt.getAttribute("data-category"),
-        member1Name: document.getElementById("m1Name").value.trim(),
-        member1Contact: document.getElementById("m1Contact").value.trim(),
-        member2Name: document.getElementById("m2Name").value.trim(),
-        member2Contact: document.getElementById("m2Contact").value.trim()
-      };
+
+      if (selectedOpt.disabled) {
+        showAlert("danger", "This event is already full! Please select another event.");
+        return;
+      }
+
+      const formData = new URLSearchParams();
+      formData.append("event", selectedOpt.value);
+      formData.append("category", selectedOpt.getAttribute("data-category") || "");
+      formData.append("member1Name", document.getElementById("m1Name").value.trim());
+      formData.append("member1Contact", document.getElementById("m1Contact").value.trim());
+      formData.append("member2Name", document.getElementById("m2Name").value.trim());
+      formData.append("member2Contact", document.getElementById("m2Contact").value.trim());
 
       submitBtn.disabled = true;
       submitBtn.textContent = "Registering...";
 
-      // Use URL-encoded parameters to avoid CORS pre-flight blocks
-      const formData = new URLSearchParams();
-      formData.append("data", JSON.stringify(payload));
-
       try {
-        const res = await fetch(SCRIPT_URL, {
+        await fetch(SCRIPT_URL, {
           method: "POST",
+          mode: "no-cors",
           headers: {
             "Content-Type": "application/x-www-form-urlencoded"
           },
           body: formData.toString()
         });
-        const result = await res.json();
 
-        if (result.result === "full") {
-          selectedOpt.disabled = true;
-          selectedOpt.text = `${selectedOpt.value} (FILLED)`;
-          eventSelect.value = "";
-          showAlert("danger", "This event is already full! Please fill for another event.");
-        } else if (result.result === "success") {
-          showAlert("success", "Registration successful! You have been registered.");
-          form.reset();
-        } else {
-          showAlert("danger", result.error || "An error occurred.");
-        }
+        showAlert("success", "Registration submitted! Updating registered list...");
+        form.reset();
+
+        setTimeout(() => {
+          fetchLiveStatus();
+        }, 2500);
+
       } catch (err) {
-        showAlert("danger", "Network error. Please try again later.");
+        showAlert("danger", "Network error. Please check your internet connection.");
       } finally {
         submitBtn.disabled = false;
         submitBtn.textContent = "Register Team";
-        fetchLiveStatus();
       }
     });
 
@@ -285,7 +406,7 @@
       alertBox.style.display = "block";
     }
 
-    // Load initial table status
+    // Load table data when the page opens
     fetchLiveStatus();
   </script>
 </body>
