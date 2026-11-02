@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Symposium Event Registration & Status</title>
+  <style>
+    :root {
+      --primary: #4f46e5;
+      --primary-hover: #4338ca;
+      --bg: #0f172a;
+      --card-bg: #1e293b;
+      --text: #f8fafc;
+      --muted: #94a3b8;
+      --border: #334155;
+      --danger: #ef4444;
+      --success: #22c55e;
+      --badge-full: #dc2626;
+      --badge-open: #16a34a;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+    body { background-color: var(--bg); color: var(--text); padding: 2rem 1rem; display: flex; justify-content: center; min-height: 100vh; }
+    .container { width: 100%; max-width: 900px; }
+    .header { text-align: center; margin-bottom: 2rem; }
+    .header h1 { font-size: 2.2rem; margin-bottom: 0.5rem; color: #fff; }
+    .header p { color: var(--muted); }
+    
+    .card { background-color: var(--card-bg); border-radius: 12px; padding: 2rem; border: 1px solid var(--border); box-shadow: 0 10px 25px rgba(0,0,0,0.3); margin-bottom: 2rem; }
+    .alert { padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem; font-weight: 500; font-size: 0.95rem; display: none; }
+    .alert.danger { background: rgba(239, 68, 68, 0.2); border: 1px solid var(--danger); color: #fca5a5; }
+    .alert.success { background: rgba(34, 197, 94, 0.2); border: 1px solid var(--success); color: #86efac; }
+    
+    .form-group { margin-bottom: 1.25rem; }
+    label { display: block; font-size: 0.875rem; font-weight: 600; margin-bottom: 0.5rem; color: #cbd5e1; }
+    input, select {
+      width: 100%; padding: 0.75rem 1rem; border-radius: 8px; border: 1px solid var(--border);
+      background-color: #0f172a; color: #fff; font-size: 1rem; outline: none; transition: border 0.2s;
+    }
+    input:focus, select:focus { border-color: var(--primary); }
+    
+    .section-title { font-size: 1.1rem; font-weight: 700; color: #a5b4fc; margin: 1.5rem 0 0.75rem; border-bottom: 1px solid var(--border); padding-bottom: 0.5rem; }
+    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    @media (max-width: 650px) { .grid { grid-template-columns: 1fr; } }
+    
+    button {
+      width: 100%; padding: 0.85rem; background-color: var(--primary); color: white; border: none;
+      border-radius: 8px; font-size: 1rem; font-weight: 600; cursor: pointer; transition: background 0.2s; margin-top: 1rem;
+    }
+    button:hover:not(:disabled) { background-color: var(--primary-hover); }
+    button:disabled { opacity: 0.6; cursor: not-allowed; }
+
+    /* Live Registration Table Styles */
+    .table-container { overflow-x: auto; margin-top: 1rem; }
+    table { width: 100%; border-collapse: collapse; text-align: left; font-size: 0.9rem; }
+    th, td { padding: 0.75rem 1rem; border-bottom: 1px solid var(--border); }
+    th { background: #111827; color: #93c5fd; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 0.05em; }
+    tr:hover { background-color: rgba(255, 255, 255, 0.02); }
+    
+    .badge { display: inline-block; padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.75rem; font-weight: 600; }
+    .badge-full { background: var(--badge-full); color: #fff; }
+    .badge-open { background: var(--badge-open); color: #fff; }
+    .refresh-btn { width: auto; padding: 0.4rem 1rem; font-size: 0.85rem; margin-top: 0; background: #334155; }
+    .table-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="header">
+      <h1>Symposium Event Registration</h1>
+      <p>Register a 2-member team. Once an event reaches 2 members, registration locks automatically.</p>
+    </div>
+
+    <!-- Registration Form Card -->
+    <div class="card">
+      <div id="statusAlert" class="alert"></div>
+
+      <form id="regForm">
+        <div class="form-group">
+          <label for="eventSelect">Select Event (2 members per event)</label>
+          <select id="eventSelect" required>
+            <option value="" disabled selected>-- Choose an Event --</option>
+            <optgroup label="Technical Events">
+              <option value="Technical Quiz" data-category="Technical">Technical Quiz</option>
+              <option value="Project Expo" data-category="Technical">Project Expo</option>
+              <option value="AI Prompt Engineering" data-category="Technical">AI Prompt Engineering</option>
+              <option value="Debugging Battle" data-category="Technical">Debugging Battle</option>
+              <option value="Paper Presentation" data-category="Technical">Paper Presentation</option>
+              <option value="Poster Presentation" data-category="Technical">Poster Presentation</option>
+            </optgroup>
+            <optgroup label="Non-Technical Events">
+              <option value="General Quiz" data-category="Non-Technical">General Quiz</option>
+              <option value="E-Sports" data-category="Non-Technical">E-Sports</option>
+              <option value="Meme Making / Short Reel" data-category="Non-Technical">Meme Making / Short Reel Contest</option>
+              <option value="Gaming Zone (Chess)" data-category="Non-Technical">Gaming Zone (Chess)</option>
+            </optgroup>
+          </select>
+        </div>
+
+        <div class="section-title">Participant 1 (Team Leader)</div>
+        <div class="grid">
+          <div class="form-group">
+            <label for="m1Name">Name</label>
+            <input type="text" id="m1Name" placeholder="Candidate 1 Name" required />
+          </div>
+          <div class="form-group">
+            <label for="m1Contact">Phone / Email</label>
+            <input type="text" id="m1Contact" placeholder="+91 9876543210" required />
+          </div>
+        </div>
+
+        <div class="section-title">Participant 2</div>
+        <div class="grid">
+          <div class="form-group">
+            <label for="m2Name">Name</label>
+            <input type="text" id="m2Name" placeholder="Candidate 2 Name" required />
+          </div>
+          <div class="form-group">
+            <label for="m2Contact">Phone / Email</label>
+            <input type="text" id="m2Contact" placeholder="+91 9876543211" required />
+          </div>
+        </div>
+
+        <button type="submit" id="submitBtn">Register Team</button>
+      </form>
+    </div>
+
+    <!-- Live Registered List Card -->
+    <div class="card">
+      <div class="table-header">
+        <h2 style="font-size: 1.25rem;">Live Event Registrations</h2>
+        <button class="refresh-btn" id="refreshBtn" onclick="fetchLiveStatus()">Refresh List</button>
+      </div>
+      <p style="color: var(--muted); font-size: 0.85rem; margin-bottom: 1rem;">
+        Real-time view of filled slots and registered participants synced with Google Sheets.
+      </p>
+
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Event</th>
+              <th>Category</th>
+              <th>Status</th>
+              <th>Registered Members</th>
+            </tr>
+          </thead>
+          <tbody id="registrationsBody">
+            <tr>
+              <td colspan="4" style="text-align: center; color: var(--muted);">Loading event data...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // REPLACE THIS WITH YOUR DEPLOYED GOOGLE APPS SCRIPT URL:
+    const SCRIPT_URL = "PASTE_YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL_HERE";
+
+    const form = document.getElementById("regForm");
+    const alertBox = document.getElementById("statusAlert");
+    const submitBtn = document.getElementById("submitBtn");
+    const eventSelect = document.getElementById("eventSelect");
+    const tbody = document.getElementById("registrationsBody");
+
+    const ALL_EVENTS = [
+      { name: "Technical Quiz", category: "Technical" },
+      { name: "Project Expo", category: "Technical" },
+      { name: "AI Prompt Engineering", category: "Technical" },
+      { name: "Debugging Battle", category: "Technical" },
+      { name: "Paper Presentation", category: "Technical" },
+      { name: "Poster Presentation", category: "Technical" },
+      { name: "General Quiz", category: "Non-Technical" },
+      { name: "E-Sports", category: "Non-Technical" },
+      { name: "Meme Making / Short Reel", category: "Non-Technical" },
+      { name: "Gaming Zone (Chess)", category: "Non-Technical" }
+    ];
+
+    async function fetchLiveStatus() {
+      if (SCRIPT_URL === "https://script.google.com/macros/s/AKfycbwZBTwIH2F91BrV7azTwNNo4VSuppbYSF2A9EYXf9YR1JTFkLMFge7IcivEICWD8Ly4/exec") {
+        tbody.innerHTML = `<tr><td colspan="4" style="text-align:center; color: #f87171;">Please add your Apps Script URL in the script.</td></tr>`;
+        return;
+      }
+
+      try {
+        const res = await fetch(SCRIPT_URL);
+        const data = await res.json();
+        
+        // Reset dropdown options text
+        Array.from(eventSelect.options).forEach(opt => {
+          if (!opt.value) return;
+          opt.disabled = false;
+          opt.text = opt.value;
+        });
+
+        // Render table
+        tbody.innerHTML = "";
+        ALL_EVENTS.forEach(ev => {
+          const sheetInfo = data[ev.name];
+          const isFull = sheetInfo && sheetInfo.status === 'full';
+          
+          // Disable option in dropdown if full
+          const opt = Array.from(eventSelect.options).find(o => o.value === ev.name);
+          if (opt && isFull) {
+            opt.disabled = true;
+            opt.text = `${ev.name} (FILLED)`;
+          }
+
+          let membersText = '<span style="color: #64748b;">None yet</span>';
+          if (sheetInfo && sheetInfo.entries && sheetInfo.entries.length > 0) {
+            const entry = sheetInfo.entries[0];
+            membersText = `1. ${entry.m1Name} <br/> 2. ${entry.m2Name}`;
+          }
+
+          const tr = document.createElement("tr");
+          tr.innerHTML = `
+            <td><strong>${ev.name}</strong></td>
+            <td>${ev.category}</td>
+            <td>
+              <span class="badge ${isFull ? 'badge-full' : 'badge-open'}">
+                ${isFull ? 'FILLED (2/2)' : 'OPEN (0/2)'}
+              </span>
+            </td>
+            <td>${membersText}</td>
+          `;
+          tbody.appendChild(tr);
+        });
+
+      } catch (err) {
+        tbody.innerHTML = `<tr><td colspan="4" style="text-align: center; color: var(--danger);">Failed to load registrations.</td></tr>`;
+      }
+    }
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      alertBox.style.display = "none";
+      alertBox.className = "alert";
+
+      const selectedOpt = eventSelect.options[eventSelect.selectedIndex];
+      const payload = {
+        event: selectedOpt.value,
+        category: selectedOpt.getAttribute("data-category"),
+        member1Name: document.getElementById("m1Name").value.trim(),
+        member1Contact: document.getElementById("m1Contact").value.trim(),
+        member2Name: document.getElementById("m2Name").value.trim(),
+        member2Contact: document.getElementById("m2Contact").value.trim()
+      };
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = "Registering...";
+
+      try {
+        const res = await fetch(SCRIPT_URL, {
+          method: "POST",
+          body: JSON.stringify(payload)
+        });
+        const result = await res.json();
+
+        if (result.result === "full") {
+          selectedOpt.disabled = true;
+          selectedOpt.text = `${selectedOpt.value} (FILLED)`;
+          eventSelect.value = "";
+          showAlert("danger", "This event is already full! Please fill for another event.");
+        } else if (result.result === "success") {
+          showAlert("success", "Registration successful!");
+          form.reset();
+        } else {
+          showAlert("danger", result.error || "An error occurred.");
+        }
+      } catch (err) {
+        showAlert("danger", "Network error. Please try again.");
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = "Register Team";
+        fetchLiveStatus(); // Refresh the table list immediately
+      }
+    });
+
+    function showAlert(type, message) {
+      alertBox.textContent = message;
+      alertBox.className = `alert ${type}`;
+      alertBox.style.display = "block";
+    }
+
+    // Initial load
+    fetchLiveStatus();
+  </script>
+</body>
+</html>
